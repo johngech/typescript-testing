@@ -1,6 +1,6 @@
 // Lesson: Writing your first tests
 export function max(a: number, b: number): number {
-  return a > b ? a : b;
+  return a >= b ? a : b;
 }
 
 // Exercise
@@ -28,11 +28,13 @@ export function add(numbers: (string | number)[]): number {
   return sum;
 }
 
-const fibonacii = (number: number): number => {
+export const fibonacii = (number: number): number => {
   return number <= 2 ? 1 : fibonacii(number - 1) + fibonacii(number - 2);
 };
 
-export function computeFibonacii(number: number | undefined): number | undefined {
+export function computeFibonacii(
+  number: number | undefined,
+): number | undefined {
   if (number === undefined) return undefined;
   let result = 0;
   for (let x = 1; x <= number; x++) result = fibonacii(x);
@@ -43,8 +45,7 @@ export function digitSum(number: number): number | undefined {
   if (number < 0) return number;
   let sum = 0;
   while (number > 0) {
-    sum += number % 10;
-    number = parseInt((number /= 10).toString());
+    sum += Number.parseInt((number /= 10).toString());
   }
   return sum;
 }
