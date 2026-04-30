@@ -1,5 +1,10 @@
 // Exercise: Writing good assertions
-export function getCoupons() {
+export interface Coupon {
+  code: string;
+  discount: number;
+}
+
+export function getCoupons(): Coupon[] {
   return [
     { code: "SAVE20NOW", discount: 0.2 },
     { code: "DISCOUNT50OFF", discount: 0.5 },
@@ -7,13 +12,9 @@ export function getCoupons() {
 }
 
 // Lesson: Positive and negative testing
-export function calculateDiscount(price, discountCode) {
-  if (typeof price !== "number" || price <= 0) {
+export function calculateDiscount(price: number, discountCode: string): number | string {
+  if (price <= 0) {
     return "Invalid price";
-  }
-
-  if (typeof discountCode !== "string") {
-    return "Invalid discount code";
   }
 
   let discount = 0;
@@ -27,18 +28,14 @@ export function calculateDiscount(price, discountCode) {
 }
 
 // Exercise: Positive and negative testing
-export function validateUserInput(username, age) {
-  let errors = [];
+export function validateUserInput(username: string, age: number): string {
+  let errors: string[] = [];
 
-  if (
-    typeof username !== "string" ||
-    username.length < 3 ||
-    username.length > 255
-  ) {
+  if (username.length < 3 || username.length > 255) {
     errors.push("Invalid username");
   }
 
-  if (typeof age !== "number" || age < 18 || age > 100) {
+  if (age < 18 || age > 100) {
     errors.push("Invalid age");
   }
 
@@ -46,13 +43,12 @@ export function validateUserInput(username, age) {
 }
 
 // Lesson: Boundary testing
-export function isPriceInRange(price, min, max) {
+export function isPriceInRange(price: number, min: number, max: number): boolean {
   return price >= min && price <= max;
 }
 
 // Exercise: Boundary testing
-export function isValidUsername(username) {
-  // if (typeof username !== "string") return false;
+export function isValidUsername(username: string | null | undefined): boolean {
   if (!username) return false;
   const minLength = 5;
   const maxLength = 15;
@@ -61,13 +57,13 @@ export function isValidUsername(username) {
 }
 
 // Exercise: Boundary testing
-export function canDrive(age, countryCode) {
-  const legalDrivingAge = {
+export function canDrive(age: number, countryCode: string): boolean | string {
+  const legalDrivingAge: Record<string, number> = {
     US: 16,
     UK: 17,
   };
 
-  if (!legalDrivingAge[countryCode]) {
+  if (!(countryCode in legalDrivingAge)) {
     return "Invalid country code";
   }
 
@@ -75,7 +71,7 @@ export function canDrive(age, countryCode) {
 }
 
 // Lesson: Testing asynchronous code
-export function fetchData() {
+export function fetchData(): Promise<number[]> {
   // return [1, 2, 3];
   // return Promise.reject({ reason: "Operation failed!" });
   return new Promise((resolve) => {
@@ -87,51 +83,49 @@ export function fetchData() {
 }
 
 // Lesson: Setup and teardown
-export class Stack {
-  constructor() {
-    this.items = [];
-  }
+export class Stack<T = unknown> {
+  private items: T[] = [];
 
-  push(item) {
+  push(item: T): void {
     this.items.push(item);
   }
 
-  pop() {
+  pop(): T {
     if (this.isEmpty()) {
       throw new Error("Stack is empty");
     }
-    return this.items.pop();
+    return this.items.pop()!;
   }
 
-  peek() {
+  peek(): T {
     if (this.isEmpty()) {
       throw new Error("Stack is empty");
     }
     return this.items[this.items.length - 1];
   }
 
-  isEmpty() {
+  isEmpty(): boolean {
     return this.items.length === 0;
   }
 
-  size() {
+  size(): number {
     return this.items.length;
   }
 
-  clear() {
+  clear(): void {
     this.items = [];
   }
 }
 
 // Additional exercises
-export function createProduct(product) {
+export function createProduct(product: { name?: string; price?: number }): { success: boolean; error?: { code: string; message: string }; message?: string } {
   if (!product.name)
     return {
       success: false,
       error: { code: "invalid_name", message: "Name is missing" },
     };
 
-  if (product.price <= 0)
+  if (product.price !== undefined && product.price <= 0)
     return {
       success: false,
       error: { code: "invalid_price", message: "Price is missing" },
@@ -140,7 +134,7 @@ export function createProduct(product) {
   return { success: true, message: "Product was successfully published" };
 }
 
-export function isStrongPassword(password) {
+export function isStrongPassword(password: string): boolean {
   // Check the length of the password (minimum 8 characters)
   if (password.length < 8) {
     return false;
