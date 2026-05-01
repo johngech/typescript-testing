@@ -12,10 +12,16 @@ export function getCoupons(): Coupon[] {
 }
 
 // Lesson: Positive and negative testing
-export function calculateDiscount(
-  price: number,
-  discountCode: string,
-): number | string {
+
+export interface Discount {
+  price: number;
+  discountCode: string;
+}
+
+export function calculateDiscount({
+  price,
+  discountCode,
+}: Discount): number | string {
   if (price <= 0) {
     return "Invalid price";
   }
@@ -31,7 +37,13 @@ export function calculateDiscount(
 }
 
 // Exercise: Positive and negative testing
-export function validateUserInput(username: string, age: number): string {
+
+export interface User {
+  username: string;
+  age: number;
+}
+
+export function validateUserInput({ username, age }: User): string {
   let errors: string[] = [];
 
   if (username.length < 3 || username.length > 255) {
@@ -55,7 +67,7 @@ export function isPriceInRange(
 }
 
 // Exercise: Boundary testing
-export function isValidUsername(username: string | null | undefined): boolean {
+export function isValidUsername(username: string): boolean {
   if (!username) return false;
   const minLength = 5;
   const maxLength = 15;
@@ -64,15 +76,19 @@ export function isValidUsername(username: string | null | undefined): boolean {
 }
 
 // Exercise: Boundary testing
-export function canDrive(age: number, countryCode: string): boolean | string {
+
+export interface CanDrive {
+  age: number;
+  countryCode: string;
+}
+
+export function canDrive({ age, countryCode }: CanDrive): boolean | string {
   const legalDrivingAge: Record<string, number> = {
     US: 16,
     UK: 17,
   };
 
-  if (!(countryCode in legalDrivingAge)) {
-    return "Invalid country code";
-  }
+  if (!(countryCode in legalDrivingAge)) return "Invalid country code";
 
   return age >= legalDrivingAge[countryCode];
 }
@@ -159,7 +175,13 @@ export class Stack<T = unknown> {
 }
 
 // Additional exercises
-export function createProduct(product: { name?: string; price?: number }): {
+
+export interface Product {
+  name?: string;
+  price?: number;
+}
+
+export function createProduct(product: Product): {
   success: boolean;
   error?: { code: string; message: string };
   message?: string;
