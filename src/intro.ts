@@ -11,6 +11,13 @@ export function fizzBuzz(n: number): string | number {
   return n.toString();
 }
 
+export function calculateAverage(numbers: number[] = []): number {
+  if (numbers.length === 0) return Number.NaN;
+  const sum = numbers.reduce((acc, cur) => acc + cur, 0);
+
+  return sum / numbers.length;
+}
+
 export function factorial(number: number): number | undefined {
   if (number < 0) return undefined;
   if (number === 0 || number === 1) return 1;
@@ -21,37 +28,44 @@ export function square(number: number): number {
   return number * number;
 }
 
-export function add(numbers: (string | number)[]): number {
-  let sum = 0;
+export function combine(value: (string | number)[]): number | string {
+  if (value.length === 0) return 0;
 
-  for (const number of numbers) sum += Number(number);
-  return sum;
+  // If all elements are numbers, sum them
+  if (value.every((item) => typeof item === "number"))
+    return value.reduce((acc, cur) => acc + cur, 0);
+
+  // Otherwise, concatenate as strings
+  return value.map((item) => String(item)).join("");
 }
 
-export const fibonacii = (number: number): number => {
-  return number <= 2 ? 1 : fibonacii(number - 1) + fibonacii(number - 2);
+export const fibonacci = (number: number): number => {
+  if (number < 0) throw new Error("Input must be non-negative");
+  if (!Number.isInteger(number)) return 0;
+  if (number <= 2) return 1;
+  return fibonacci(number - 1) + fibonacci(number - 2);
 };
 
-export function computeFibonacii(
-  number: number | undefined,
-): number | undefined {
-  if (number === undefined) return undefined;
-  let result = 0;
-  for (let x = 1; x <= number; x++) result = fibonacii(x);
-  return result;
+export function getSumOfFibonacci(number: number): number {
+  if (number < 0) throw new Error("Input must be non-negative");
+  if (!Number.isInteger(number)) return 0;
+  const range = Array.from({ length: number }, (_, i) => i + 1);
+  return range.map((x) => fibonacci(x)).reduce((acc, cur) => acc + cur, 0);
 }
 
-export function digitSum(number: number): number | undefined {
-  if (number < 0) return number;
+export function digitSum(number: number): number {
+  const isNegative = number < 0;
+  number = Math.abs(number);
   let sum = 0;
   while (number > 0) {
-    sum += Number.parseInt((number /= 10).toString());
+    sum += number % 10;
+    number = Math.floor(number / 10);
   }
-  return sum;
+  return isNegative ? -1 * sum : sum;
 }
 
 // Get all prime numbers
-export function sieveOfEratosthens(n: number): number[] {
+export function getListOfPrimeNumbers(n: number): number[] {
   // Step 1: Create an array of boolean values
   let primes = new Array(n + 1).fill(true);
   primes[0] = primes[1] = false; // 0 and 1 are not prime numbers

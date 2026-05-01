@@ -12,7 +12,10 @@ export function getCoupons(): Coupon[] {
 }
 
 // Lesson: Positive and negative testing
-export function calculateDiscount(price: number, discountCode: string): number | string {
+export function calculateDiscount(
+  price: number,
+  discountCode: string,
+): number | string {
   if (price <= 0) {
     return "Invalid price";
   }
@@ -43,7 +46,11 @@ export function validateUserInput(username: string, age: number): string {
 }
 
 // Lesson: Boundary testing
-export function isPriceInRange(price: number, min: number, max: number): boolean {
+export function isPriceInRange(
+  price: number,
+  min: number,
+  max: number,
+): boolean {
   return price >= min && price <= max;
 }
 
@@ -118,7 +125,11 @@ export class Stack<T = unknown> {
 }
 
 // Additional exercises
-export function createProduct(product: { name?: string; price?: number }): { success: boolean; error?: { code: string; message: string }; message?: string } {
+export function createProduct(product: { name?: string; price?: number }): {
+  success: boolean;
+  error?: { code: string; message: string };
+  message?: string;
+} {
   if (!product.name)
     return {
       success: false,
