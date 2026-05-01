@@ -64,66 +64,36 @@ export function digitSum(number: number): number {
   return isNegative ? -1 * sum : sum;
 }
 
-// Get all prime numbers
+// Get all prime numbers up to n using Sieve of Eratosthenes
 export function getListOfPrimeNumbers(n: number): number[] {
-  // Step 1: Create an array of boolean values
-  let primes = new Array(n + 1).fill(true);
-  primes[0] = primes[1] = false; // 0 and 1 are not prime numbers
+  if (n < 2 || !Number.isInteger(n)) return [];
+
+  // Initialize sieve: index represents number, value represents isPrime
+  const sieve = new Array(n + 1).fill(true);
+  sieve[0] = sieve[1] = false;
+
+  // Mark non-prime numbers
   for (let p = 2; p * p <= n; p++) {
-    if (primes[p]) {
-      // Step 3: Mark multiples of p as not prime
-      for (let i = p * p; i <= n; i += p) {
-        primes[i] = false;
+    if (sieve[p]) {
+      for (let multiple = p * p; multiple <= n; multiple += p) {
+        sieve[multiple] = false;
       }
     }
   }
-  // Step 4: Collect all prime numbers
-  let primeNumbers: number[] = [];
-  for (let i = 2; i <= n; i++) {
-    if (primes[i]) {
-      primeNumbers.push(i);
-    }
-  }
 
-  return primeNumbers;
+  // Collect prime numbers using filter
+  return Array.from({ length: n + 1 }, (_, i) => i).filter((i) => sieve[i]);
 }
 
-export function isPalindrome(value: unknown): boolean {
-  if (value == null) return false;
-  // Convert and remove any non alphanumberic character.
-  const originalNumber = String(value).replace(/[^a-zA-Z0-9]/g, "");
-  let reversedString = originalNumber.split("").reverse().join("");
-  return originalNumber === reversedString;
-}
+export function isPalindrome(value: string | number): boolean {
+  // Convert to string and remove non-alphanumeric characters
+  const cleaned = String(value).replaceAll(/[^a-zA-Z0-9]/g, "");
+  const chars = Array.from(cleaned);
 
-export class Point {
-  #x: number;
-  #y: number;
-
-  constructor(x: number, y: number) {
-    this.#x = x;
-    this.#y = y;
+  // Check if palindrome using two-pointer approach
+  for (let i = 0; i < Math.floor(chars.length / 2); i++) {
+    if (chars[i] !== chars[chars.length - 1 - i]) return false;
   }
 
-  calculateDistance(point: Point): number {
-    const Dx = point.#x - this.#x;
-    const Dy = point.#y - this.#y;
-    return Math.sqrt(Math.pow(Dx, 2) + Math.pow(Dy, 2));
-  }
-
-  setX(x: number): void {
-    this.#x = x;
-  }
-
-  getX(): number {
-    return this.#x;
-  }
-
-  setY(y: number): void {
-    this.#y = y;
-  }
-
-  getY(): number {
-    return this.#y;
-  }
+  return true;
 }

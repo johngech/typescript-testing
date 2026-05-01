@@ -90,6 +90,40 @@ export function fetchData(): Promise<number[]> {
 }
 
 // Lesson: Setup and teardown
+
+export class Point {
+  #x: number;
+  #y: number;
+
+  constructor(x: number, y: number) {
+    this.#x = x;
+    this.#y = y;
+  }
+
+  calculateDistance(point: Point): number {
+    const Dx = point.#x - this.#x;
+    const Dy = point.#y - this.#y;
+    return Math.sqrt(Math.pow(Dx, 2) + Math.pow(Dy, 2));
+  }
+
+  setX(x: number): void {
+    this.#x = x;
+  }
+
+  getX(): number {
+    return this.#x;
+  }
+
+  setY(y: number): void {
+    this.#y = y;
+  }
+
+  getY(): number {
+    return this.#y;
+  }
+}
+
+// Set up & Tear down exercise
 export class Stack<T = unknown> {
   private items: T[] = [];
 

@@ -10,6 +10,8 @@ import {
   fibonacci,
   getSumOfFibonacci,
   digitSum,
+  getListOfPrimeNumbers,
+  isPalindrome,
 } from "../src/intro";
 
 describe("max", () => {
@@ -138,8 +140,14 @@ describe("combine", () => {
 
 describe("fibonacci", () => {
   it("should throw an error if given arg is less than zero", () => {
-    expect(() => getSumOfFibonacci(-1)).toThrow(/non-negative/);
+    expect(() => fibonacci(-1)).toThrow(/non-negative/);
   });
+
+  it("should return 0 if provided arg is not an integer", () => {
+    expect(fibonacci(1.1)).toBe(0);
+    expect(fibonacci(0.5)).toBe(0);
+  });
+
   it.each([
     { n: 1, expected: 1 },
     { n: 2, expected: 1 },
@@ -158,6 +166,11 @@ describe("fibonacci", () => {
 describe("getSumOfFibonacci", () => {
   it("should throw an error if given arg is less than zero", () => {
     expect(() => getSumOfFibonacci(-1)).toThrow(/non-negative/);
+  });
+
+  it("should return 0 if provided arg is not an integer", () => {
+    expect(getSumOfFibonacci(1.1)).toBe(0);
+    expect(getSumOfFibonacci(0.1)).toBe(0);
   });
 
   it.each([
@@ -189,6 +202,73 @@ describe("digitSum", () => {
     "should return '$expected' as the sum of the digit '$actual' if provided",
     ({ n, expected }) => {
       expect(digitSum(n)).toBe(expected);
+    },
+  );
+});
+
+describe("getListOfPrimeNumbers", () => {
+  it.each([
+    { n: -1, expected: [] },
+    { n: 0, expected: [] },
+    { n: 1, expected: [] },
+  ])(
+    "should return '$expected' when provided arg is less than 2, which is '$n'",
+    ({ n, expected }) => {
+      expect(getListOfPrimeNumbers(n)).toStrictEqual(expected);
+    },
+  );
+
+  it.each([
+    { n: -1.1, expected: [] },
+    { n: 0.5, expected: [] },
+    { n: 1.1, expected: [] },
+  ])(
+    "should return '$expected' when provided arg is not an integer, which is '$n'",
+    ({ n, expected }) => {
+      expect(getListOfPrimeNumbers(n)).toStrictEqual(expected);
+    },
+  );
+
+  it.each([
+    { n: 2, expected: [2] },
+    { n: 3, expected: [2, 3] },
+    { n: 4, expected: [2, 3] },
+    { n: 5, expected: [2, 3, 5] },
+    { n: 6, expected: [2, 3, 5] },
+    { n: 7, expected: [2, 3, 5, 7] },
+    { n: 19, expected: [2, 3, 5, 7, 11, 13, 17, 19] },
+  ])(
+    "should return '$expected' when provided arg is '$n'",
+    ({ n, expected }) => {
+      expect(getListOfPrimeNumbers(n)).toStrictEqual(expected);
+    },
+  );
+});
+
+describe("isPalindrome", () => {
+  it.each([
+    { value: 123 },
+    { value: 10 },
+    { value: -123 },
+    { value: "abc" },
+    { value: "1a3" },
+  ])(
+    "should return false if provided arg is not palindrome,which is '$value'",
+    ({ value }) => {
+      expect(isPalindrome(value)).toBeFalsy();
+    },
+  );
+
+  it.each([
+    { value: 121 },
+    { value: 101 },
+    { value: -131 },
+    { value: "aba" },
+    { value: "radar" },
+  ])(
+    "should return true if provided arg is palindrome,which is $value",
+    ({ value }) => {
+      expect(isPalindrome(value)).toBeTruthy();
     },
   );
 });
