@@ -1,4 +1,4 @@
-import delay from 'delay';
+import delay from "delay";
 
 export async function trackPageView(pagePath: string): Promise<void> {
   console.log(`Sending analytics...`);

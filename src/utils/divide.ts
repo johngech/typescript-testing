@@ -2,7 +2,7 @@ export class DivisionError extends Error {
   constructor(
     message: string,
     public dividend?: number,
-    public divisor?: number
+    public divisor?: number,
   ) {
     super(message);
     this.name = "DivisionError";
@@ -16,12 +16,12 @@ export interface DivideOptions {
 export function divideSync(
   x: number,
   y: number,
-  options: DivideOptions = {}
+  options: DivideOptions = {},
 ): number {
-  if (typeof x !== "number" || isNaN(x)) {
+  if (Number.isNaN(x)) {
     throw new DivisionError(`Dividend must be a valid number, got ${x}`);
   }
-  if (typeof y !== "number" || isNaN(y)) {
+  if (Number.isNaN(y)) {
     throw new DivisionError(`Divisor must be a valid number, got ${y}`);
   }
   if (y === 0) {
@@ -38,7 +38,7 @@ export function divideSync(
 export async function divide(
   x: number,
   y: number,
-  options: DivideOptions = {}
+  options: DivideOptions = {},
 ): Promise<number> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -52,7 +52,10 @@ export async function divide(
   });
 }
 
-export function divideWithRemainder(x: number, y: number): {
+export function divideWithRemainder(
+  x: number,
+  y: number,
+): {
   quotient: number;
   remainder: number;
   divisible: boolean;

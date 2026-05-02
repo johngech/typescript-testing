@@ -25,18 +25,18 @@ const DEFAULT_BRACKETS: TaxBracket[] = [
 
 export function calculateTax(
   income: number,
-  options: TaxOptions = {}
+  options: TaxOptions = {},
 ): TaxCalculationResult {
-  if (typeof income !== "number" || isNaN(income) || income < 0) {
+  if (income < 0) {
     throw new Error(
-      `Invalid income: must be a non-negative number, got ${income}`
+      `Invalid income: must be a non-negative number, got ${income}`,
     );
   }
 
   const brackets = options.brackets ?? DEFAULT_BRACKETS;
   const bracket =
     brackets.find((b) => income >= b.min && income <= b.max) ??
-    brackets[brackets.length - 1];
+    (brackets.at(-1) as TaxBracket);
 
   const tax = income * bracket.rate;
   const effectiveRate = income > 0 ? tax / income : 0;
@@ -51,7 +51,7 @@ export function calculateTax(
 
 export async function calculateTaxAsync(
   income: number,
-  options: TaxOptions = {}
+  options: TaxOptions = {},
 ): Promise<TaxCalculationResult> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {

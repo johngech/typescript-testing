@@ -17,52 +17,52 @@ describe("isPrimeNumber", () => {
     expect(isPrimeNumber(-5)).toBe(false);
   });
 
-  it("should return true for prime numbers", () => {
-    expect(isPrimeNumber(2)).toBe(true);
-    expect(isPrimeNumber(3)).toBe(true);
-    expect(isPrimeNumber(5)).toBe(true);
-    expect(isPrimeNumber(7)).toBe(true);
-    expect(isPrimeNumber(11)).toBe(true);
-    expect(isPrimeNumber(13)).toBe(true);
-    expect(isPrimeNumber(97)).toBe(true);
-  });
+  it.each([2, 3, 5, 7, 11, 13, 17, 19, 97])(
+    "should return true for prime numbers",
+    (n) => {
+      expect(isPrimeNumber(n)).toBe(true);
+    },
+  );
 
-  it("should return false for composite numbers", () => {
-    expect(isPrimeNumber(4)).toBe(false);
-    expect(isPrimeNumber(6)).toBe(false);
-    expect(isPrimeNumber(8)).toBe(false);
-    expect(isPrimeNumber(9)).toBe(false);
-    expect(isPrimeNumber(10)).toBe(false);
-    expect(isPrimeNumber(100)).toBe(false);
-  });
+  it.each([4, 6, 8, 9, 10, 100])(
+    "should return false for composite numbers",
+    (n) => {
+      expect(isPrimeNumber(n)).toBe(false);
+    },
+  );
 
   it("should return false for non-integer numbers", () => {
     expect(isPrimeNumber(3.5)).toBe(false);
   });
 
   it("should return false for NaN", () => {
-    expect(isPrimeNumber(NaN)).toBe(false);
+    expect(isPrimeNumber(Number.NaN)).toBe(false);
   });
 });
 
 describe("isPrimeNumberAsync", () => {
   it("should return true for prime numbers asynchronously", async () => {
     const result = await isPrimeNumberAsync(17);
+
     expect(result).toBe(true);
   });
 
   it("should return false for composite numbers asynchronously", async () => {
     const result = await isPrimeNumberAsync(100);
+
     expect(result).toBe(false);
   });
 
   it("should timeout for very large numbers", async () => {
-    await expect(isPrimeNumberAsync(9999999999999, 1)).rejects.toThrow(/timed out/);
+    await expect(isPrimeNumberAsync(9999999999999, 1)).rejects.toThrow(
+      /timed out/,
+    );
   });
 
-  it("should handle edge case numbers", async () => {
+  it.concurrent("should handle edge case numbers", async () => {
     const result1 = await isPrimeNumberAsync(2);
     const result2 = await isPrimeNumberAsync(1);
+
     expect(result1).toBe(true);
     expect(result2).toBe(false);
   });
@@ -74,16 +74,23 @@ describe("primeFactorization", () => {
     expect(primeFactorization(1)).toEqual([]);
   });
 
-  it("should return the number itself for prime numbers", () => {
-    expect(primeFactorization(7)).toEqual([7]);
-    expect(primeFactorization(13)).toEqual([13]);
-  });
+  it.each([7, 13, 19])(
+    "should return the number itself for prime numbers",
+    (n) => {
+      expect(primeFactorization(n)).toEqual([n]);
+    },
+  );
 
-  it("should return prime factors for composite numbers", () => {
-    expect(primeFactorization(12)).toEqual([2, 2, 3]);
-    expect(primeFactorization(60)).toEqual([2, 2, 3, 5]);
-    expect(primeFactorization(100)).toEqual([2, 2, 5, 5]);
-  });
+  it.each([
+    { given: 12, expected: [2, 2, 3] },
+    { given: 60, expected: [2, 2, 3, 5] },
+    { given: 100, expected: [2, 2, 5, 5] },
+  ])(
+    "should return prime factors for composite numbers",
+    ({ given, expected }) => {
+      expect(primeFactorization(given)).toEqual(expected);
+    },
+  );
 });
 
 describe("getNthPrime", () => {
@@ -92,20 +99,24 @@ describe("getNthPrime", () => {
     expect(getNthPrime(-1)).toBeNull();
   });
 
-  it("should return correct nth prime", () => {
-    expect(getNthPrime(1)).toBe(2);
-    expect(getNthPrime(2)).toBe(3);
-    expect(getNthPrime(3)).toBe(5);
-    expect(getNthPrime(4)).toBe(7);
-    expect(getNthPrime(5)).toBe(11);
-    expect(getNthPrime(10)).toBe(29);
+  it.each([
+    { given: 1, expected: 2 },
+    { given: 2, expected: 3 },
+    { given: 3, expected: 5 },
+    { given: 4, expected: 7 },
+    { given: 5, expected: 11 },
+    { given: 10, expected: 29 },
+  ])("should return correct nth prime", ({ given, expected }) => {
+    expect(getNthPrime(given)).toBe(expected);
   });
 });
 
 describe("getPrimesInRange", () => {
-  it("should return primes in the given range", () => {
-    expect(getPrimesInRange(1, 10)).toEqual([2, 3, 5, 7]);
-    expect(getPrimesInRange(10, 20)).toEqual([11, 13, 17, 19]);
+  it.each([
+    { min: 1, max: 10, expected: [2, 3, 5, 7] },
+    { min: 10, max: 20, expected: [11, 13, 17, 19] },
+  ])("should return primes in the given range", ({ min, max, expected }) => {
+    expect(getPrimesInRange(min, max)).toEqual(expected);
   });
 
   it("should return empty array if no primes in range", () => {
@@ -137,6 +148,7 @@ describe("PrimeSieve", () => {
 
   it("should return all primes up to max", () => {
     const primes = sieve.getPrimes();
+
     expect(primes[0]).toBe(2);
     expect(primes).toContain(97);
     expect(primes).not.toContain(4);

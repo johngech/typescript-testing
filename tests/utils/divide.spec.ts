@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { divide, divideSync, divideWithRemainder, DivisionError } from "../../src/utils/divide";
+import {
+  divide,
+  divideSync,
+  divideWithRemainder,
+  DivisionError,
+} from "../../src/utils/divide";
 
 describe("divideSync", () => {
   it("should divide two positive numbers", () => {
@@ -19,7 +24,7 @@ describe("divideSync", () => {
 
   it("should throw DivisionError when dividing by zero", () => {
     expect(() => divideSync(10, 0)).toThrow(DivisionError);
-    expect(() => divideSync(10, 0)).toThrow("Cannot divide by zero");
+    expect(() => divideSync(10, 0)).toThrow(/Cannot divide by zero/i);
   });
 
   it("should include dividend and divisor in DivisionError", () => {
@@ -33,11 +38,15 @@ describe("divideSync", () => {
   });
 
   it("should throw DivisionError for invalid dividend", () => {
-    expect(() => divideSync(NaN, 2)).toThrow(/Dividend must be a valid number/);
+    expect(() => divideSync(Number.NaN, 2)).toThrow(
+      /Dividend must be a valid number/i,
+    );
   });
 
   it("should throw DivisionError for invalid divisor", () => {
-    expect(() => divideSync(10, NaN)).toThrow(/Divisor must be a valid number/);
+    expect(() => divideSync(10, Number.NaN)).toThrow(
+      /Divisor must be a valid number/i,
+    );
   });
 });
 
@@ -57,7 +66,9 @@ describe("divide", () => {
   });
 
   it("should reject for invalid input", async () => {
-    await expect(divide(NaN, 2)).rejects.toThrow(/Dividend must be a valid number/);
+    await expect(divide(Number.NaN, 2)).rejects.toThrow(
+      /Dividend must be a valid number/i,
+    );
   });
 });
 

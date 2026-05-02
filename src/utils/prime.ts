@@ -1,17 +1,16 @@
 export function isPrimeNumber(n: number): boolean {
-  if (typeof n !== "number" || isNaN(n) || n < 2) return false;
+  if (n < 2) return false;
   if (!Number.isInteger(n)) return false;
   if (n === 2) return true;
   if (n % 2 === 0) return false;
-  for (let i = 3; i <= Math.sqrt(n); i += 2) {
-    if (n % i === 0) return false;
-  }
+  for (let i = 3; i <= Math.sqrt(n); i += 2) if (n % i === 0) return false;
+
   return true;
 }
 
 export async function isPrimeNumberAsync(
   n: number,
-  timeoutMs: number = 1000
+  timeoutMs: number = 1000,
 ): Promise<boolean> {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
