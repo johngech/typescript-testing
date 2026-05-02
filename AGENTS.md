@@ -13,7 +13,11 @@
 - `bun run typecheck` — TypeScript type checking
 
 ## Structure
-- `src/utils/` — utility functions (getSum, divide, calculateTax, prime)
+- `src/utils/` — advanced utility modules:
+  - `getSum.ts` — summation with options (ignore negatives/zeros, transform), async support
+  - `divide.ts` — DivisionError class, sync/async divide, divideWithRemainder, precision control
+  - `calculateTax.ts` — progressive tax brackets, TaxCalculationResult, async support
+  - `prime.ts` — optimized prime checks (O(√n)), primeFactorization, getNthPrime, getPrimesInRange, PrimeSieve class
 - `src/libs/` — library modules (security, currency, email, payment, analytics, shipping)
 - `src/core.ts` — main exercises (discounts, validation, async, Stack class, password strength)
 - `src/intro.ts` — introductory functions (max, fizzBuzz, factorial, fibonacci, etc.)
