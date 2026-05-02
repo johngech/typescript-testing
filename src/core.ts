@@ -94,7 +94,7 @@ export function canDrive({ age, countryCode }: CanDrive): boolean | string {
 }
 
 // Lesson: Testing asynchronous code
-export function fetchData(): Promise<number[]> {
+export function fetchData(): Promise<number[]> | number[] {
   // return [1, 2, 3];
   // return Promise.reject({ reason: "Operation failed!" });
   return new Promise((resolve) => {
@@ -158,7 +158,7 @@ export class Stack<T = unknown> {
     if (this.isEmpty()) {
       throw new Error("Stack is empty");
     }
-    return this.items[this.items.length - 1];
+    return this.items.at(-1) as T;
   }
 
   isEmpty(): boolean {
@@ -172,6 +172,8 @@ export class Stack<T = unknown> {
   clear(): void {
     this.items = [];
   }
+
+  getItems = () => this.items;
 }
 
 // Additional exercises
@@ -181,18 +183,18 @@ export interface Product {
   price?: number;
 }
 
-export function createProduct(product: Product): {
+export function createProduct({ name, price }: Product): {
   success: boolean;
   error?: { code: string; message: string };
   message?: string;
 } {
-  if (!product.name)
+  if (!name)
     return {
       success: false,
       error: { code: "invalid_name", message: "Name is missing" },
     };
 
-  if (product.price !== undefined && product.price <= 0)
+  if (!price || price <= 0)
     return {
       success: false,
       error: { code: "invalid_price", message: "Price is missing" },
@@ -202,26 +204,26 @@ export function createProduct(product: Product): {
 }
 
 export function isStrongPassword(password: string): boolean {
-  // Check the length of the password (minimum 8 characters)
   if (password.length < 8) {
     return false;
   }
 
-  // Check if the password contains at least one uppercase letter
   if (!/[A-Z]/.test(password)) {
     return false;
   }
 
-  // Check if the password contains at least one lowercase letter
   if (!/[a-z]/.test(password)) {
     return false;
   }
 
-  // Check if the password contains at least one digit (number)
   if (!/\d/.test(password)) {
     return false;
   }
 
-  // If all criteria are met, consider the password strong
+  // Check for at least one special symbol (non-alphanumeric)
+  if (!/[^A-Za-z0-9]/.test(password)) {
+    return false;
+  }
+
   return true;
 }

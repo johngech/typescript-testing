@@ -1,10 +1,15 @@
-import { it, expect, describe } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import {
   calculateDiscount,
   canDrive,
+  createProduct,
+  fetchData,
   getCoupons,
   isPriceInRange,
+  isStrongPassword,
   isValidUsername,
+  Point,
+  Stack,
   validateUserInput,
 } from "../src/core";
 
@@ -217,4 +222,204 @@ describe("canDrive", () => {
       expect(canDrive({ age: age, countryCode: countryCode })).toBe(result);
     },
   );
+});
+
+describe("fetchData", () => {
+  it("should handle failed promise", async () => {
+    try {
+      await fetchData();
+    } catch (error) {
+      expect(error).toHaveProperty("reason");
+      expect(error).toMatchObject({ reason: /fail/i });
+    }
+
+    // Or we can use the following techniques to test failed promise
+
+    // await expect(fetchData()).rejects.toThrow();
+    // await expect(fetchData()).rejects.toHaveProperty("reason");
+    // await expect(fetchData()).rejects.toMatchObject({ reason: /fail/i });
+  });
+
+  it("should return a promise that will resolve to an array of numbers", async () => {
+    const result = await fetchData();
+    expect(result.length).toBeGreaterThan(0);
+    expect(result).toEqual(expect.arrayContaining([1, 2]));
+  });
+});
+
+describe("Point", () => {
+  let point: Point;
+  beforeEach(() => {
+    point = new Point(0, 0);
+  });
+
+  it("calculateDistance should return the calculated distance of two points", () => {
+    const otherPoint = new Point(0, 2);
+    const calculatedDistance = point.calculateDistance(otherPoint);
+
+    expect(calculatedDistance).toBe(2);
+  });
+
+  it("setX should set value", () => {
+    point.setX(1);
+
+    expect(point.getX()).toBe(1);
+  });
+
+  it("getX should get value", () => {
+    point.setX(1);
+
+    expect(point.getX()).toBe(1);
+  });
+
+  it("setY should set value", () => {
+    point.setY(1);
+
+    expect(point.getY()).toBe(1);
+  });
+
+  it("getY should get value", () => {
+    point.setY(1);
+
+    expect(point.getY()).toBe(1);
+  });
+});
+
+describe("Stack", () => {
+  let stack: Stack;
+  beforeEach(() => {
+    stack = new Stack();
+  });
+
+  it("push should add an item to the stack", () => {
+    stack.push(1);
+
+    expect(stack.size()).toBeGreaterThan(0);
+    expect(stack.getItems()).toEqual(expect.arrayContaining([1]));
+  });
+
+  it("pop should throw an error if stack is empty", () => {
+    expect(() => stack.pop()).toThrow(/empty/i);
+  });
+
+  it("pop should remove and return the top item from the stack", () => {
+    [1, 2].forEach((item) => stack.push(item));
+
+    expect(stack.pop()).toBe(2);
+    expect(stack.size()).toBe(1);
+
+    expect(stack.pop()).toBe(1);
+    expect(stack.size()).toBe(0);
+  });
+
+  it("peek should throw an error if stack is empty", () => {
+    expect(() => stack.peek()).toThrow(/empty/i);
+  });
+
+  it("peek should return the top item from the stack without removing it", () => {
+    [1, 2].forEach((item) => stack.push(item));
+
+    expect(stack.peek()).toBe(2);
+    expect(stack.size()).toBe(2);
+  });
+
+  it("isEmpty should return true if stack is empty", () => {
+    expect(stack.isEmpty()).toBeTruthy();
+  });
+
+  it("isEmpty should return false if stack is not empty", () => {
+    stack.push(1);
+
+    expect(stack.isEmpty()).toBeFalsy();
+  });
+
+  it("size should return the number of items in the stack", () => {
+    [1, 2].forEach((item) => stack.push(item));
+
+    expect(stack.size()).toBe(2);
+  });
+
+  it("clear should remove all items from the stack", () => {
+    [1, 2].forEach((item) => stack.push(item));
+
+    expect(stack.size()).toBe(2);
+
+    stack.clear();
+
+    expect(stack.size()).toBe(0);
+  });
+
+  it("getItems should return all items from the stack", () => {
+    [1, 2, 3].forEach((item) => stack.push(item));
+
+    expect(stack.getItems()).toEqual(expect.arrayContaining([1, 2, 3]));
+  });
+});
+
+describe("createProduct", () => {
+  it("should return error when name is missing", () => {
+    const result = createProduct({ price: 10 });
+
+    expect(result).toHaveProperty("error");
+    expect(result).toMatchObject({ success: false });
+    expect(result.error?.code).toMatch(/invalid_name/i);
+  });
+
+  it("should return error when name is empty string", () => {
+    const result = createProduct({ name: "", price: 10 });
+
+    expect(result).toHaveProperty("error");
+    expect(result).toMatchObject({ success: false });
+    expect(result.error?.code).toMatch(/invalid_name/i);
+  });
+
+  it("should return error when price is missing", () => {
+    const result = createProduct({ name: "Product" });
+
+    expect(result).toHaveProperty("error");
+    expect(result).toMatchObject({ success: false });
+    expect(result).toMatchObject({ error: { code: /invalid_price/i } });
+  });
+
+  it.each([0, -0.01, -1])("should return error when price is %d", (price) => {
+    const result = createProduct({ name: "Product", price });
+
+    expect(result).toHaveProperty("error");
+    expect(result).toMatchObject({ success: false });
+    expect(result).toMatchObject({ error: { code: /invalid_price/i } });
+  });
+
+  it("should return success when valid name and positive price are provided", () => {
+    const result = createProduct({ name: "Product", price: 10 });
+
+    expect(result).toHaveProperty("success");
+    expect(result).toMatchObject({ success: true, message: /success/i });
+  });
+});
+
+describe("isStrongPassword", () => {
+  it("should return false when password is shorter than 8 characters", () => {
+    expect(isStrongPassword("")).toBe(false);
+    expect(isStrongPassword("a".repeat(7))).toBe(false);
+  });
+
+  it("should return false when password has no uppercase letter", () => {
+    expect(isStrongPassword("a".repeat(8) + "1!")).toBe(false);
+  });
+
+  it("should return false when password has no lowercase letter", () => {
+    expect(isStrongPassword("A".repeat(8) + "1!")).toBe(false);
+  });
+
+  it("should return false when password has no numeric digit", () => {
+    expect(isStrongPassword("Aa".repeat(4) + "!")).toBe(false);
+  });
+
+  it("should return false when password has no special symbol", () => {
+    expect(isStrongPassword("Aa1".repeat(3))).toBe(false);
+  });
+
+  it("should return true when password meets all criteria including special symbol", () => {
+    expect(isStrongPassword("Ab1!".repeat(2))).toBe(true);
+  });
 });
