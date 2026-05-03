@@ -1,5 +1,5 @@
 {
-  "name": "javascript-testing",
+  "name": "ts-testing",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,6 +10,7 @@
     "typecheck": "bunx tsc --noEmit"
   },
   "devDependencies": {
+    "@types/node": "^25.6.0",
     "@vitest/coverage-v8": "^4.1.5",
     "@vitest/ui": "^4.1.5",
     "c8": "^11.0.0",

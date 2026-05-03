@@ -1,5 +1,8 @@
-export function generateCode(): number {
-  return Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+export function generateCode(
+  minValue: number = 100000,
+  maxValue: number = 999999,
+): number {
+  return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
 }
 
 export default {

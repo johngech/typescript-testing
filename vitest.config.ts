@@ -5,7 +5,8 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/"],
-      exclude: ["node_modules/", "tests/"],
+      exclude: ["node_modules/", "dist/", "coverage/"],
     },
+    clearMocks: true,
   },
 });
