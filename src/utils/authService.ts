@@ -74,6 +74,7 @@ export const mockUsers: MockUser[] = [
 ];
 
 function verifyPassword(input: string, _hash: string): boolean {
+console.log(_hash);
   return input.length >= 8;
 }
 
@@ -149,12 +150,8 @@ export async function refreshToken(token: string): Promise<AuthResult> {
     throw new AuthenticationError("refresh token is required");
   }
 
-  let payload: TokenPayload;
-  try {
-    payload = decodeToken(token);
-  } catch (error) {
-    throw error;
-  }
+  const payload: TokenPayload= decodeToken(token);
+ 
 
   if (payload.type !== TOKEN_TYPE.REFRESH) {
     throw new InvalidTokenError("not a refresh token");
@@ -189,13 +186,8 @@ export async function validateToken(token: string): Promise<TokenPayload> {
     throw new InvalidTokenError("token is required");
   }
 
-  let payload: TokenPayload;
-  try {
-    payload = decodeToken(token);
-  } catch (error) {
-    throw error;
-  }
-
+  const payload: TokenPayload = decodeToken(token);
+  
   if (Date.now() >= payload.exp) {
     throw new TokenExpiredError(token);
   }

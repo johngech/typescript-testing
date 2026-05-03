@@ -21,7 +21,7 @@ export function calculateAverage(numbers: number[] = []): number {
 export function factorial(number: number): number | undefined {
   if (number < 0) return undefined;
   if (number === 0 || number === 1) return 1;
-  return number * factorial(number - 1)!;
+  return number * (factorial(number - 1) as number);
 }
 
 export function square(number: number): number {

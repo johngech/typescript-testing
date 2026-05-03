@@ -44,7 +44,7 @@ export interface User {
 }
 
 export function validateUserInput({ username, age }: User): string {
-  let errors: string[] = [];
+  const errors: string[] = [];
 
   if (username.length < 3 || username.length > 255) {
     errors.push("Invalid username");
@@ -151,7 +151,7 @@ export class Stack<T = unknown> {
     if (this.isEmpty()) {
       throw new Error("Stack is empty");
     }
-    return this.items.pop()!;
+    return this.items.pop() as T;
   }
 
   peek(): T {
