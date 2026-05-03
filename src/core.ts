@@ -61,7 +61,7 @@ export function validateUserInput({ username, age }: User): string {
 export function isPriceInRange(
   price: number,
   min: number,
-  max: number,
+  max: number
 ): boolean {
   return price >= min && price <= max;
 }

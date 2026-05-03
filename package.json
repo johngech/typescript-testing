@@ -7,13 +7,15 @@
     "test": "bunx vitest",
     "test:ui": "bunx vitest --ui",
     "coverage": "bunx vitest run --coverage",
-    "typecheck": "bunx tsc --noEmit"
+    "typecheck": "bunx tsc --noEmit",
+    "format": "bunx prettier . --write"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
     "@vitest/coverage-v8": "^4.1.5",
     "@vitest/ui": "^4.1.5",
     "c8": "^11.0.0",
+    "prettier": "^3.8.3",
     "typescript": "^6.0.3",
     "vite": "^8.0.10",
     "vitest": "^4.1.5"

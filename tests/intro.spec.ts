@@ -99,7 +99,7 @@ describe("factorial", () => {
     "should return $expected if given arg is $actual",
     ({ actual, expected }) => {
       expect(factorial(actual)).toBe(expected);
-    },
+    }
   );
 });
 
@@ -116,7 +116,7 @@ describe("square", () => {
     "should return '$expected' if provided arg is '$actual'",
     ({ actual, expected }) => {
       expect(square(actual)).toBe(expected);
-    },
+    }
   );
 });
 
@@ -134,7 +134,7 @@ describe("combine", () => {
     "should return '$expected' if provided arg is '$actual'",
     ({ actual, expected }) => {
       expect(combine(actual)).toBe(expected);
-    },
+    }
   );
 });
 
@@ -159,7 +159,7 @@ describe("fibonacci", () => {
     "should return $expected for the $n-th Fibonacci number",
     ({ n, expected }) => {
       expect(fibonacci(n)).toBe(expected);
-    },
+    }
   );
 });
 
@@ -184,7 +184,7 @@ describe("getSumOfFibonacci", () => {
     "should return $expected for the sum of Fibonacci numbers from 1 to $n",
     ({ n, expected }) => {
       expect(getSumOfFibonacci(n)).toBe(expected);
-    },
+    }
   );
 });
 
@@ -202,7 +202,7 @@ describe("digitSum", () => {
     "should return '$expected' as the sum of the digit '$actual' if provided",
     ({ n, expected }) => {
       expect(digitSum(n)).toBe(expected);
-    },
+    }
   );
 });
 
@@ -215,7 +215,7 @@ describe("getListOfPrimeNumbers", () => {
     "should return '$expected' when provided arg is less than 2, which is '$n'",
     ({ n, expected }) => {
       expect(getListOfPrimeNumbers(n)).toStrictEqual(expected);
-    },
+    }
   );
 
   it.each([
@@ -226,7 +226,7 @@ describe("getListOfPrimeNumbers", () => {
     "should return '$expected' when provided arg is not an integer, which is '$n'",
     ({ n, expected }) => {
       expect(getListOfPrimeNumbers(n)).toStrictEqual(expected);
-    },
+    }
   );
 
   it.each([
@@ -241,7 +241,7 @@ describe("getListOfPrimeNumbers", () => {
     "should return '$expected' when provided arg is '$n'",
     ({ n, expected }) => {
       expect(getListOfPrimeNumbers(n)).toStrictEqual(expected);
-    },
+    }
   );
 });
 
@@ -256,7 +256,7 @@ describe("isPalindrome", () => {
     "should return false if provided arg is not palindrome,which is '$value'",
     ({ value }) => {
       expect(isPalindrome(value)).toBeFalsy();
-    },
+    }
   );
 
   it.each([
@@ -269,6 +269,6 @@ describe("isPalindrome", () => {
     "should return true if provided arg is palindrome,which is $value",
     ({ value }) => {
       expect(isPalindrome(value)).toBeTruthy();
-    },
+    }
   );
 });

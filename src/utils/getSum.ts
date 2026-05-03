@@ -8,7 +8,7 @@ export function getSum(...numbers: number[]): number {
   numbers.forEach((num, index) => {
     if (Number.isNaN(num)) {
       throw new TypeError(
-        `Invalid number at index ${index}: expected number, got ${typeof num}`,
+        `Invalid number at index ${index}: expected number, got ${typeof num}`
       );
     }
   });
@@ -30,7 +30,7 @@ export async function getSumAsync(...numbers: number[]): Promise<number> {
 
 export function getSumWithOptions(
   numbers: number[],
-  options: SumOptions = {},
+  options: SumOptions = {}
 ): number {
   let filtered = [...numbers];
 

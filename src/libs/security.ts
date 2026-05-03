@@ -1,6 +1,6 @@
 export function generateCode(
   minValue: number = 100000,
-  maxValue: number = 999999,
+  maxValue: number = 999999
 ): number {
   return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
 }

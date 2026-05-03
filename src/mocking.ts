@@ -28,7 +28,7 @@ export async function renderPage(): Promise<string> {
 // Exercise
 export async function submitOrder(
   order: { totalAmount: number },
-  creditCard: { creditCardNumber: string },
+  creditCard: { creditCardNumber: string }
 ): Promise<{ success: boolean; error?: string }> {
   const paymentResult = await charge(creditCard, order.totalAmount);
 

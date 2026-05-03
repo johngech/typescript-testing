@@ -10,7 +10,7 @@ export function isPrimeNumber(n: number): boolean {
 
 export async function isPrimeNumberAsync(
   n: number,
-  timeoutMs: number = 1000,
+  timeoutMs: number = 1000
 ): Promise<boolean> {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {

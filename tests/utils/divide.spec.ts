@@ -39,13 +39,13 @@ describe("divideSync", () => {
 
   it("should throw DivisionError for invalid dividend", () => {
     expect(() => divideSync(Number.NaN, 2)).toThrow(
-      /Dividend must be a valid number/i,
+      /Dividend must be a valid number/i
     );
   });
 
   it("should throw DivisionError for invalid divisor", () => {
     expect(() => divideSync(10, Number.NaN)).toThrow(
-      /Divisor must be a valid number/i,
+      /Divisor must be a valid number/i
     );
   });
 });
@@ -67,7 +67,7 @@ describe("divide", () => {
 
   it("should reject for invalid input", async () => {
     await expect(divide(Number.NaN, 2)).rejects.toThrow(
-      /Dividend must be a valid number/i,
+      /Dividend must be a valid number/i
     );
   });
 });

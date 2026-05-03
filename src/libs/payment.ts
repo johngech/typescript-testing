@@ -6,7 +6,7 @@ export interface CreditCardInfo {
 
 export async function charge(
   creditCardInfo: CreditCardInfo,
-  amount: number,
+  amount: number
 ): Promise<{ status: "failed" | "success" }> {
   console.log(`Charging Credit Card: ${creditCardInfo.creditCardNumber}`);
   console.log(`Amount: ${amount}`);

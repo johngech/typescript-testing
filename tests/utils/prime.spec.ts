@@ -21,14 +21,14 @@ describe("isPrimeNumber", () => {
     "should return true for prime numbers",
     (n) => {
       expect(isPrimeNumber(n)).toBe(true);
-    },
+    }
   );
 
   it.each([4, 6, 8, 9, 10, 100])(
     "should return false for composite numbers",
     (n) => {
       expect(isPrimeNumber(n)).toBe(false);
-    },
+    }
   );
 
   it("should return false for non-integer numbers", () => {
@@ -55,7 +55,7 @@ describe("isPrimeNumberAsync", () => {
 
   it("should timeout for very large numbers", async () => {
     await expect(isPrimeNumberAsync(9999999999999, 1)).rejects.toThrow(
-      /timed out/,
+      /timed out/
     );
   });
 
@@ -78,7 +78,7 @@ describe("primeFactorization", () => {
     "should return the number itself for prime numbers",
     (n) => {
       expect(primeFactorization(n)).toEqual([n]);
-    },
+    }
   );
 
   it.each([
@@ -89,7 +89,7 @@ describe("primeFactorization", () => {
     "should return prime factors for composite numbers",
     ({ given, expected }) => {
       expect(primeFactorization(given)).toEqual(expected);
-    },
+    }
   );
 });
 

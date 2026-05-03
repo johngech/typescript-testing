@@ -38,7 +38,7 @@ export interface Order {
 export class OrderValidationError extends Error {
   constructor(
     public readonly reason: string,
-    public readonly items?: OrderItem[],
+    public readonly items?: OrderItem[]
   ) {
     super(`Order validation failed: ${reason}`);
     this.name = "OrderValidationError";
@@ -55,7 +55,7 @@ export class OrderNotFoundError extends Error {
 export class OrderCancellationError extends Error {
   constructor(
     public readonly orderId: string,
-    public readonly currentStatus: OrderStatus,
+    public readonly currentStatus: OrderStatus
   ) {
     super(`Cannot cancel order "${orderId}" with status "${currentStatus}"`);
     this.name = "OrderCancellationError";
@@ -79,12 +79,12 @@ function validateItems(items: OrderItem[]): void {
     }
     if (item.quantity <= 0 || !Number.isInteger(item.quantity)) {
       throw new OrderValidationError(
-        `invalid quantity for product "${item.productId}"`,
+        `invalid quantity for product "${item.productId}"`
       );
     }
     if (item.unitPrice < 0) {
       throw new OrderValidationError(
-        `invalid unitPrice for product "${item.productId}"`,
+        `invalid unitPrice for product "${item.productId}"`
       );
     }
   }

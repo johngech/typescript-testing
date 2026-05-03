@@ -59,7 +59,7 @@ describe("calculateDiscount", () => {
 
   it("should handle negative price", () => {
     expect(calculateDiscount({ price: -10, discountCode: "SAVE10" })).toMatch(
-      /invalid/i,
+      /invalid/i
     );
   });
 
@@ -71,13 +71,13 @@ describe("calculateDiscount", () => {
 describe("validateUserInput", () => {
   it("should return success if given valid input", () => {
     expect(validateUserInput({ username: "john", age: 18 })).toMatch(
-      /success/i,
+      /success/i
     );
     expect(validateUserInput({ username: "john", age: 20 })).toMatch(
-      /success/i,
+      /success/i
     );
     expect(validateUserInput({ username: "john", age: 100 })).toMatch(
-      /success/i,
+      /success/i
     );
   });
 
@@ -87,28 +87,28 @@ describe("validateUserInput", () => {
 
   it("should handle username greater than 255 characters long", () => {
     expect(validateUserInput({ username: "a".repeat(256), age: 20 })).toMatch(
-      /invalid/i,
+      /invalid/i
     );
   });
 
   it("should handle age less than 18", () => {
     expect(validateUserInput({ username: "john", age: 17 })).toMatch(
-      /invalid/i,
+      /invalid/i
     );
   });
 
   it("should handle age greater than 100", () => {
     expect(validateUserInput({ username: "john", age: 101 })).toMatch(
-      /invalid/i,
+      /invalid/i
     );
   });
 
   it("should handle invalid username and age", () => {
     expect(validateUserInput({ username: "", age: 101 })).toMatch(
-      /invalid username/i,
+      /invalid username/i
     );
     expect(validateUserInput({ username: "", age: 101 })).toMatch(
-      /invalid age/i,
+      /invalid age/i
     );
   });
 });
@@ -220,7 +220,7 @@ describe("canDrive", () => {
     "should return $result for ($age, $countryCode)",
     ({ age, countryCode, result }) => {
       expect(canDrive({ age: age, countryCode: countryCode })).toBe(result);
-    },
+    }
   );
 });
 

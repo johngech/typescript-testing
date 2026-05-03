@@ -1,6 +1,6 @@
 import { it, expect, describe, vi } from "vitest";
 /**
- * 
+ *
  * ==================================================
  * STUB
  * ==================================================
@@ -12,7 +12,7 @@ import { it, expect, describe, vi } from "vitest";
  * Giving the chef pre-made sauce so the dish becomes predictable.
  *
  * Test Example:
-  */
+ */
 
 import { exchange } from "../../src/mock-stub-spy/exchange";
 
@@ -27,9 +27,9 @@ describe("Stub example", () => {
 });
 
 /**
- * 
+ *
  * ==================================================
  * SUMMARY
  * ==================================================
  * Stub → control output only
-  */
+ */

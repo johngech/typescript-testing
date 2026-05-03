@@ -37,25 +37,25 @@ describe("login", () => {
 
   it("should throw an error when empty email and password are provided", async () => {
     await expect(login({ email: "", password: "" })).rejects.toThrow(
-      /credentials are required/i,
+      /credentials are required/i
     );
   });
 
   it("should throw an error when invalid email format is provided", async () => {
     await expect(login({ email: "a", password: "a" })).rejects.toThrow(
-      InvalidEmailFormatError,
+      InvalidEmailFormatError
     );
   });
 
   it("should throw an error when provided email is not found", async () => {
     await expect(
-      login({ email: "abc@domain.com", password: "a" }),
+      login({ email: "abc@domain.com", password: "a" })
     ).rejects.toThrow(AuthenticationError);
   });
 
   it("should throw an error when password is wrong", async () => {
     await expect(
-      login({ email: "admin@example.com", password: "a" }),
+      login({ email: "admin@example.com", password: "a" })
     ).rejects.toThrow(AuthenticationError);
   });
 
@@ -93,13 +93,13 @@ describe("refreshToken", () => {
 
   it("should throw an error when empty token is provided", async () => {
     await expect(refreshToken("")).rejects.toThrow(
-      /refresh token is required/i,
+      /refresh token is required/i
     );
   });
 
   it("should throw an error when invalid token is provided", async () => {
     await expect(refreshToken("abce123d$#%")).rejects.toThrow(
-      InvalidTokenError,
+      InvalidTokenError
     );
   });
 
@@ -110,7 +110,7 @@ describe("refreshToken", () => {
     });
 
     await expect(refreshToken(accessToken)).rejects.toThrow(
-      /not a refresh token/i,
+      /not a refresh token/i
     );
   });
 
@@ -124,7 +124,7 @@ describe("refreshToken", () => {
 
     // Decode token to get actual expiration
     const decoded = JSON.parse(
-      Buffer.from(refresh, "base64").toString("utf-8"),
+      Buffer.from(refresh, "base64").toString("utf-8")
     );
 
     // Advance time past token expiration
@@ -144,7 +144,9 @@ describe("refreshToken", () => {
     // Clear users to simulate user deletion
     mockUsers.length = 0;
 
-    await expect(refreshToken(token)).rejects.toThrow(/user no longer exists/i);
+    await expect(refreshToken(token)).rejects.toThrow(
+      /user no longer exists/i
+    );
   });
 
   it("should issue a new access token", async () => {
@@ -189,7 +191,7 @@ describe("validateToken", () => {
 
   it("should throw an error when invalid token is provided", async () => {
     await expect(validateToken("abce123d$#%")).rejects.toThrow(
-      InvalidTokenError,
+      InvalidTokenError
     );
   });
 
@@ -203,7 +205,7 @@ describe("validateToken", () => {
 
     // Decode token to get actual expiration
     const decoded = JSON.parse(
-      Buffer.from(refresh, "base64").toString("utf-8"),
+      Buffer.from(refresh, "base64").toString("utf-8")
     );
 
     // Advance time past token expiration

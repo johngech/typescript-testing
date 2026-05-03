@@ -15,6 +15,4 @@ describe("getCustomers", () => {
 
     expect(result).toMatchObject([{ status: "inactive" }]);
   });
-
-  
 });

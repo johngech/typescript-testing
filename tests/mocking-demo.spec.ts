@@ -75,7 +75,7 @@ describe("Mocking", () => {
     const SomeClass = vi.fn(
       class HelloWorld {
         greet = () => "Hello";
-      },
+      }
     );
 
     const someClass = new SomeClass();
@@ -88,7 +88,7 @@ describe("Mocking", () => {
         unobserve = vi.fn();
         takeRecords = vi.fn();
         disconnect = vi.fn();
-      },
+      }
     );
 
     vi.stubGlobal("IntersectionObserver", IntersectionObserverStub);

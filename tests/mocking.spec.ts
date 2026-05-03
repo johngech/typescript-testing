@@ -60,7 +60,10 @@ describe("getShippingInfo", () => {
   });
 
   it("should return shipping info if shipping quote can be fetched", () => {
-    vi.mocked(getShippingQuote).mockReturnValue({ cost: 10, estimatedDays: 2 });
+    vi.mocked(getShippingQuote).mockReturnValue({
+      cost: 10,
+      estimatedDays: 2,
+    });
 
     const result = getShippingInfo("Ethiopia");
 
@@ -229,9 +232,19 @@ describe("isOnline", () => {
   it.each([
     { hour: 7, minute: 59, expected: false, desc: "7:59 before opening" },
     { hour: 8, minute: 0, expected: true, desc: "8:00 at opening" },
-    { hour: 14,minute: 30, expected: true, desc: "14:30 during business hours",},
+    {
+      hour: 14,
+      minute: 30,
+      expected: true,
+      desc: "14:30 during business hours",
+    },
     { hour: 19, minute: 59, expected: true, desc: "19:59 before closing" },
-    { hour: 20, minute: 0, expected: false, desc: "20:00 at closing (exclusive)",},
+    {
+      hour: 20,
+      minute: 0,
+      expected: false,
+      desc: "20:00 at closing (exclusive)",
+    },
     { hour: 20, minute: 1, expected: false, desc: "20:01 after closing" },
     { hour: 22, minute: 0, expected: false, desc: "22:00 after closing" },
   ])(
@@ -243,7 +256,7 @@ describe("isOnline", () => {
       const result = isOnline();
 
       expect(result).toBe(expected);
-    },
+    }
   );
 });
 
@@ -261,21 +274,84 @@ describe("getDiscount", () => {
   const year = now.getFullYear();
 
   it.each([
-    { month: 10, day: 12,hour:4, minute:0, expected: 0, description: "any other days" },
-    { month: 11, day: 11,hour:5, minute:15, expected: 0, description: "any other days" },
-    { month: 11, day: 24,hour:1, minute:59, expected: 0, description: "any other days" },
-    { month: 11, day: 25,hour:0, minute:0, expected: 0.2, description: "Christmas day" },
-    { month: 11, day: 25,hour:0, minute:1, expected: 0.2, description: "Christmas day" },
-    { month: 11, day: 25,hour:23, minute:59, expected: 0.2, description: "Christmas day" },
-    { month: 11, day: 25,hour:24, minute:0, expected: 0, description: "Christmas day" },
-    { month: 11, day: 26,hour:10, minute:30, expected: 0, description: "any other days" },
-    { month: 12, day: 11,hour:10, minute:20, expected: 0, description: "any other days" },
+    {
+      month: 10,
+      day: 12,
+      hour: 4,
+      minute: 0,
+      expected: 0,
+      description: "any other days",
+    },
+    {
+      month: 11,
+      day: 11,
+      hour: 5,
+      minute: 15,
+      expected: 0,
+      description: "any other days",
+    },
+    {
+      month: 11,
+      day: 24,
+      hour: 1,
+      minute: 59,
+      expected: 0,
+      description: "any other days",
+    },
+    {
+      month: 11,
+      day: 25,
+      hour: 0,
+      minute: 0,
+      expected: 0.2,
+      description: "Christmas day",
+    },
+    {
+      month: 11,
+      day: 25,
+      hour: 0,
+      minute: 1,
+      expected: 0.2,
+      description: "Christmas day",
+    },
+    {
+      month: 11,
+      day: 25,
+      hour: 23,
+      minute: 59,
+      expected: 0.2,
+      description: "Christmas day",
+    },
+    {
+      month: 11,
+      day: 25,
+      hour: 24,
+      minute: 0,
+      expected: 0,
+      description: "Christmas day",
+    },
+    {
+      month: 11,
+      day: 26,
+      hour: 10,
+      minute: 30,
+      expected: 0,
+      description: "any other days",
+    },
+    {
+      month: 12,
+      day: 11,
+      hour: 10,
+      minute: 20,
+      expected: 0,
+      description: "any other days",
+    },
   ])(
     "should return $expected when it is $description ",
-    ({ month, day, hour,minute, expected }) => {
+    ({ month, day, hour, minute, expected }) => {
       vi.setSystemTime(new Date(year, month, day, hour, minute));
 
       expect(getDiscount()).toBe(expected);
-    },
+    }
   );
 });

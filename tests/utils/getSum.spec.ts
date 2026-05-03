@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { getSum, getSumAsync, getSumWithOptions } from "../../src/utils/getSum";
+import {
+  getSum,
+  getSumAsync,
+  getSumWithOptions,
+} from "../../src/utils/getSum";
 
 describe("getSum", () => {
   it("should return the sum of multiple numbers", () => {
@@ -40,7 +44,7 @@ describe("getSumAsync", () => {
   });
 
   it("should reject with TypeError for invalid input", async () => {
-    await expect(getSumAsync(1,Number.NaN)).rejects.toThrow(TypeError);
+    await expect(getSumAsync(1, Number.NaN)).rejects.toThrow(TypeError);
   });
 });
 

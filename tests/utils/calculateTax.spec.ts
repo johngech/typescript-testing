@@ -83,7 +83,9 @@ describe("calculateTaxAsync", () => {
   it("should use custom brackets asynchronously", async () => {
     const customBrackets: TaxBracket[] = [{ min: 0, max: 10000, rate: 0.08 }];
 
-    const result = await calculateTaxAsync(10000, { brackets: customBrackets });
+    const result = await calculateTaxAsync(10000, {
+      brackets: customBrackets,
+    });
 
     expect(result.tax).toBe(800);
   });

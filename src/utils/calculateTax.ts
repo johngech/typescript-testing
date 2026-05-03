@@ -25,11 +25,11 @@ const DEFAULT_BRACKETS: TaxBracket[] = [
 
 export function calculateTax(
   income: number,
-  options: TaxOptions = {},
+  options: TaxOptions = {}
 ): TaxCalculationResult {
   if (income < 0) {
     throw new Error(
-      `Invalid income: must be a non-negative number, got ${income}`,
+      `Invalid income: must be a non-negative number, got ${income}`
     );
   }
 
@@ -51,7 +51,7 @@ export function calculateTax(
 
 export async function calculateTaxAsync(
   income: number,
-  options: TaxOptions = {},
+  options: TaxOptions = {}
 ): Promise<TaxCalculationResult> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {

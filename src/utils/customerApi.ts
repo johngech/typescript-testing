@@ -39,7 +39,7 @@ export class CustomerNotFoundError extends Error {
 export class InvalidCustomerError extends Error {
   constructor(
     public readonly field: string,
-    public readonly reason: string,
+    public readonly reason: string
   ) {
     super(`Invalid customer ${field}: ${reason}`);
     this.name = "InvalidCustomerError";
@@ -78,7 +78,7 @@ function isValidEmail(email: string): boolean {
 }
 
 export async function getCustomers(
-  filters?: CustomerFilters,
+  filters?: CustomerFilters
 ): Promise<Customer[]> {
   await delay(50);
 
@@ -97,7 +97,7 @@ export async function getCustomers(
     result = result.filter(
       (c) =>
         c.name.toLowerCase().includes(term) ||
-        c.email.toLowerCase().includes(term),
+        c.email.toLowerCase().includes(term)
     );
   }
 

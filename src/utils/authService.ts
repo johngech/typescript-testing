@@ -89,7 +89,7 @@ function generateToken(payload: Omit<TokenPayload, "exp">): string {
 function decodeToken(token: string): TokenPayload {
   try {
     const decoded = JSON.parse(
-      Buffer.from(token, "base64").toString("utf-8"),
+      Buffer.from(token, "base64").toString("utf-8")
     ) as TokenPayload;
     return decoded;
   } catch {
