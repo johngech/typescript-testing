@@ -46,7 +46,7 @@ export class InvalidCustomerError extends Error {
   }
 }
 
-const mockDatabase: Customer[] = [
+export const mockDatabase: Customer[] = [
   {
     id: "cust_1",
     name: "Alice Johnson",
@@ -101,7 +101,7 @@ export async function getCustomers(
     );
   }
 
-  return result;
+  return result.map((c) => ({ ...c }));
 }
 
 export async function getCustomerById(id: string): Promise<Customer> {

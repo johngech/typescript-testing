@@ -1,9 +1,5 @@
 import delay from "delay";
-import {
-  CustomerNotFoundError,
-  getCustomerById,
-  type Customer,
-} from "./customerApi";
+import { getCustomerById, type Customer } from "./customerApi";
 
 export const ORDER_STATUS = {
   PENDING: "pending",
@@ -62,7 +58,7 @@ export class OrderCancellationError extends Error {
   }
 }
 
-const orders: Order[] = [];
+export const orders: Order[] = [];
 
 function calculateTotal(items: OrderItem[]): number {
   return items.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
@@ -90,31 +86,31 @@ function validateItems(items: OrderItem[]): void {
   }
 }
 
-export async function processOrder(input: ProcessOrderInput): Promise<Order> {
+export async function processOrder({
+  customerId,
+  items,
+}: ProcessOrderInput): Promise<Order> {
   await delay(60);
 
   let customer: Customer;
   try {
-    customer = await getCustomerById(input.customerId);
-  } catch (error) {
-    if (error instanceof CustomerNotFoundError) {
-      throw error;
-    }
-    throw new OrderValidationError("invalid customer");
+    customer = await getCustomerById(customerId);
+  } catch {
+    throw new OrderValidationError(`customer "${customerId}" not found`);
   }
 
   if (customer.status !== "active") {
     throw new OrderValidationError(`customer "${customer.id}" is not active`);
   }
 
-  validateItems(input.items);
+  validateItems(items);
 
   const order: Order = {
     id: `ord_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-    customerId: input.customerId,
-    items: input.items.map((item) => ({ ...item })),
+    customerId: customerId,
+    items: items.map((item) => ({ ...item })),
     status: ORDER_STATUS.PROCESSING,
-    total: calculateTotal(input.items),
+    total: calculateTotal(items),
     createdAt: new Date(),
   };
 
