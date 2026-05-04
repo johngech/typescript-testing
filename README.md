@@ -16,6 +16,36 @@ A comprehensive collection of real-world testing examples and patterns using Typ
 - **Fake Timers** — Controlling time with `vi.useFakeTimers()` and `vi.advanceTimersByTime()`
 - **Object Assertions** — Using `toHaveProperty()` and `toMatchObject()` for flexible assertions
 
+## Testing Principles
+
+**Maintainable Tests**
+
+- [x] Easy to update when source code changes
+- [x] Clear intent — test names describe what and why, not how
+- [x] Minimal duplication — shared setup and reusable test utilities
+- [x] No brittle implementation details — avoid testing private logic or exact internal structures
+
+**Scalable Tests**
+
+- [x] Fast execution — minimize I/O, use mocks over real external dependencies
+- [x] Isolated — each test runs independently with no shared mutable state
+- [x] Parallel-friendly — no reliance on global state or test execution order
+- [x] Well-structured — logical grouping and consistent file organization
+
+**Trustworthy Tests**
+
+- [x] Catch real bugs — test meaningful behavior, not trivial implementation
+- [x] No false positives — tests fail only when actual regressions occur
+- [x] No false negatives — tests reliably detect broken functionality
+- [x] Cover edge cases — boundary values, invalid inputs, and error paths
+
+**Behavioral Tests**
+
+- [x] Focus on what the system does, not how it does it
+- [x] Test from the user's or consumer's perspective
+- [x] Verify observable outcomes rather than internal state
+- [x] Resilient to refactoring — internal changes don't break tests
+
 ## Tech Stack
 
 - **Runtime**: Bun
