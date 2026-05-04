@@ -9,7 +9,8 @@
     "coverage": "bunx vitest run --coverage",
     "typecheck": "bunx tsc --noEmit",
     "format": "bunx prettier . --write",
-    "lint": "bunx eslint . --fix"
+    "lint": "bunx eslint . --fix",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -21,7 +22,9 @@
     "eslint": "^10.3.0",
     "eslint-config": "^0.3.0",
     "globals": "^17.6.0",
+    "husky": "^9.1.7",
     "jiti": "^2.6.1",
+    "lint-staged": "^16.4.0",
     "prettier": "^3.8.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.1",
