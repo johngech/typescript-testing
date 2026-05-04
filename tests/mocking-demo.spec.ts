@@ -59,7 +59,7 @@ describe("Mocking", () => {
       await rejectedPromise();
     } catch (error) {
       expect(error).toHaveProperty("reason");
-      expect(error?.reason).toMatch(/failed/i);
+      expect(error).toMatchObject({ reason: /failed/i });
     }
   });
 
