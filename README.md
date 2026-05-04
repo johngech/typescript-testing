@@ -124,6 +124,66 @@ describe("refreshToken", () => {
 });
 ```
 
+## Example: Cancel Order Test
+
+```typescript
+describe("cancelOrder", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    orders.length = 0;
+  });
+
+  const activeCustomer: customerApi.Customer = {
+    id: "cust_1",
+    name: "Alice Johnson",
+    email: "alice@example.com",
+    status: "active",
+    type: "individual",
+    createdAt: new Date("2024-01-15"),
+  };
+
+  const createTestOrder = async () => {
+    vi.mocked(customerApi.getCustomerById).mockResolvedValue(activeCustomer);
+    return processOrder({
+      customerId: activeCustomer.id,
+      items: [{ productId: "prod_1", quantity: 1, unitPrice: 100 }],
+    });
+  };
+
+  it("should change order status to cancelled when order is processing", async () => {
+    const order = await createTestOrder();
+
+    await cancelOrder(order.id);
+
+    const status = await getOrderStatus(order.id);
+    expect(status).toBe("cancelled");
+  });
+
+  it("should throw OrderNotFoundError when order does not exist", async () => {
+    await expect(cancelOrder("ord_nonexistent")).rejects.toThrow(
+      OrderNotFoundError
+    );
+  });
+
+  it.each([
+    { status: "shipped" as const, description: "shipped" },
+    { status: "delivered" as const, description: "delivered" },
+    { status: "cancelled" as const, description: "already cancelled" },
+  ])(
+    "should throw OrderCancellationError when order is $description",
+    async ({ status }) => {
+      const order = await createTestOrder();
+      const found = orders.find((o) => o.id === order.id);
+      if (found) found.status = status;
+
+      await expect(cancelOrder(order.id)).rejects.toThrow(
+        OrderCancellationError
+      );
+    }
+  );
+});
+```
+
 ## Project Structure
 
 ```

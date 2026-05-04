@@ -44,6 +44,8 @@
   - `mocking.spec.ts` (comprehensive mocking examples: module mocking, interaction testing, partial mocking, spying, date mocking with parametrized tests)
   - `mock-stub-spy/stub.test.ts` (stubbing example with vi.spyOn)
   - `utils/Answer.test.ts` (spying example on class methods)
+  - `utils/orderService.spec.ts` (behavioral tests for processOrder, cancelOrder, getOrderStatus)
+  - `utils/customerApi.spec.ts` (24 tests for getCustomers, getCustomerById, createCustomer)
 - `vitest.config.ts` — explicit Vitest configuration
 - `eslint.config.ts` — ESLint config with js/typescript-eslint recommended + strict
 - `prettier.config.ts` — Prettier config (singleQuote, semi, printWidth: 100)
@@ -61,3 +63,7 @@
 - `.prettierignore` excludes node_modules, dist, coverage
 - `.eslintignore` deprecated (ignores now in `eslint.config.ts`)
 - GitHub Actions workflow "Test & Lint" runs on push/PR to main/master: typecheck → lint → test
+- Recent commit: `ea10b14` - "Add comprehensive tests for customerApi and orderService with behavioral testing"
+- `processOrder` in `orderService.ts` throws `OrderValidationError` consistently for all validation failures
+- `mockDatabase` in `customerApi.ts` and `orders` in `orderService.ts` are exported for test isolation
+- Behavioral tests focus on outcomes (status changes, errors thrown) not implementation details
